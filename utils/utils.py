@@ -5,8 +5,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize  import word_tokenize
 
-# nltk.download("stopwords")
-# nltk.download("punkt")
+
 
 def textcleaner(data :list[str]):   #remove the meaningless words
     filter_word = [word for word in data if word.isalpha() or word.isnumeric()]  # to remove the non meaningfull words
@@ -17,7 +16,7 @@ def sent_to_list(data):  #tokenizer {sentences to list}
     tokens = word_tokenize(data)
     stop_words = set(stopwords.words("english"))
 
-    tokens = [word.lower() for word in tokens if word not in stop_words]
+    tokens = [word.lower() for word in tokens if word.lower() not in stop_words]
 
     return tokens
 
