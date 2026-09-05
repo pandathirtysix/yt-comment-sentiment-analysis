@@ -19,13 +19,13 @@ def transform(text, sentiment):
     # Tokens → Word2Vec vectors
     vectorized = [
         [
-            vectorizer.wv[token] if token in vectorizer.wv
+            vectorizer.wv[token]
+            if token in vectorizer.wv.key_to_index
             else np.zeros(100, dtype=np.float32)
             for token in sentence
         ]
         for sentence in tokens
     ]
-
     # Label encoding
     senti_encoded = sentiment_encoder.transform(sentiment)
 
@@ -42,11 +42,23 @@ def sentiment_decoder(data):
 
 def transform_text(text):
 
-    #text to vector
+    # Text → tokens
     tokens = [textcleaner(sent_to_list(x)) for x in text]
-    vectorized = [vectorizer.wv[token] if token else np.nan for token in tokens]
+
+    # Tokens → Word2Vec vectors
+    vectorized = [
+        [
+            vectorizer.wv[token]
+            if token in vectorizer.wv.key_to_index
+            else np.zeros(100, dtype=np.float32)
+            for token in sentence
+        ]
+        for sentence in tokens
+    ]
 
     return vectorized
+
+
 def transform_sentiments(sentiment):
         # Label encoding
     senti_encoded = sentiment_encoder.transform(sentiment)
