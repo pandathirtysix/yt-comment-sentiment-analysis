@@ -1,6 +1,8 @@
 pandas
 numpy
-sklearn
+scikit-learn
 nltk
 gensim
-pickle
+tensorflow
+google-api-python-client
+python-dotenv

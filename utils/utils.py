@@ -4,6 +4,13 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize  import word_tokenize
+import os
+
+BASE_DIR = os.getcwd()
+
+MODEL_DIR = os.path.join(BASE_DIR, "modeltraining")
+DATA_DIR = os.path.join(BASE_DIR, "data_pipeline")
+
 
 
 

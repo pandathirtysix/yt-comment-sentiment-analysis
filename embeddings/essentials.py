@@ -1,14 +1,16 @@
 import pandas as pd
 import numpy as np
 import pickle 
+import os
 from utils.utils import sent_to_list, textcleaner
 from gensim.models import Word2Vec
 from tensorflow.keras.utils import pad_sequences
+from utils.utils import MODEL_DIR
 
 
-vectorizer = Word2Vec.load(r"X:\PROGRAMS\nlp-project-2\models\vectorizer.model")
+vectorizer = Word2Vec.load(os.path.join(MODEL_DIR, "vectorizer.model"))
 
-with open(r"X:\PROGRAMS\nlp-project-2\models\sentiment_LE.pkl", "rb") as f:
+with open(os.path.join(MODEL_DIR, "sentiment_LE.pkl"), "rb") as f:
     sentiment_encoder = pickle.load(f)
 
 def transform(text, sentiment):
