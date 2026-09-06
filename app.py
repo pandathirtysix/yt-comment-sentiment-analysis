@@ -73,7 +73,7 @@ if __name__ == "__main__":
                 try:
 
                     # st.write("VIDEO ID:", video_id)
-                # comments to vectors (30,100)
+                    # comments to vectors (30,100)
                     comments = get_yt_comments(video_id)
                     vectorized_comments = comments_preprocessing(comments)
                     prediction = model_predict(vectorized_comments)

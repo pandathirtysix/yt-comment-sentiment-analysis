@@ -12,31 +12,16 @@ from tensorflow.keras.layers import LSTM, Bidirectional
 from data_pipeline.preprocessingpipeline import datatrnsformsentiment
 from embeddings.essentials import transform
 
-
-# ============================================================
-# RNN CLASS
-# ============================================================
-
 class RNN:
 
     def __init__(self):
         pass
-
-
-# ============================================================
-# MODEL PREDICTION
-# ============================================================
 
 def model_prediction(text):
 
     text_transformed = datatrnsformsentiment(text)
 
     return text_transformed
-
-
-# ============================================================
-# DATA PREPARATION
-# ============================================================
 
 def model_essential(training_data):
 
@@ -54,8 +39,6 @@ def model_essential(training_data):
 
     df.dropna(inplace=True)
 
-    # 80% training
-    # 20% testing
     train_text, test_text, train_sentiment, test_sentiment = train_test_split(
         df["text"],
         df["sentiments"],
@@ -72,10 +55,6 @@ def model_essential(training_data):
         test_sentiment
     )
 
-
-# ============================================================
-# WORD2VEC PADDING
-# ============================================================
 
 MAX_LEN = 30
 EMBEDDING_DIM = 100
@@ -96,20 +75,16 @@ def pad_word2vec_sequences(data, max_len=MAX_LEN):
                 dtype=np.float32
             ).flatten()
 
-            # Keep only correct Word2Vec vectors
             if len(vector) == EMBEDDING_DIM:
                 vectors.append(vector)
 
-        # Cut long sentences
         vectors = vectors[:max_len]
 
-        # Create empty sentence
         padded_sentence = np.zeros(
             (max_len, EMBEDDING_DIM),
             dtype=np.float32
         )
 
-        # Put Word2Vec vectors into it
         if vectors:
 
             padded_sentence[:len(vectors)] = np.asarray(
@@ -125,10 +100,6 @@ def pad_word2vec_sequences(data, max_len=MAX_LEN):
     )
 
 
-# ============================================================
-# LOAD DATA
-# ============================================================
-
 data = pd.read_csv(
     os.path.join(
         "dataset",
@@ -140,10 +111,6 @@ data = pd.read_csv(
 print("Dataset shape:", data.shape)
 
 
-# ============================================================
-# TRANSFORM + SPLIT
-# ============================================================
-
 (
     train_text,
     test_text,
@@ -151,10 +118,6 @@ print("Dataset shape:", data.shape)
     test_sentiment
 ) = model_essential(data)
 
-
-# ============================================================
-# PAD WORD2VEC SEQUENCES
-# ============================================================
 
 print("Starting pad sequences...")
 
@@ -182,10 +145,6 @@ test_sentiment = np.asarray(
 )
 
 
-# ============================================================
-# CHECK LABELS
-# ============================================================
-
 print("Unique training labels:",
       np.unique(train_sentiment))
 
@@ -203,9 +162,6 @@ optimizer=tf.keras.optimizers.Adam(
     learning_rate=0.0005
 )
 
-# ============================================================
-# NUMBER OF CLASSES
-# ============================================================
 
 num_classes = len(
     np.unique(
@@ -218,10 +174,6 @@ num_classes = len(
 print("Number of sentiment classes:",
       num_classes)
 
-
-# ============================================================
-# CREATE RNN MODEL
-# ============================================================
 
 model = Sequential([
     tf.keras.Input(shape=(MAX_LEN, EMBEDDING_DIM)),
@@ -240,10 +192,6 @@ model = Sequential([
     Dense(num_classes, activation="softmax")
 ])
 
-
-# ============================================================
-# COMPILE MODEL
-# ============================================================
 
 model.compile(
 
@@ -275,10 +223,6 @@ history = model.fit(
     verbose=1
 )
 
-# ============================================================
-# TEST MODEL
-# ============================================================
-
 print("\nEvaluating model...\n")
 
 test_loss, test_accuracy = model.evaluate(
@@ -290,10 +234,10 @@ test_loss, test_accuracy = model.evaluate(
     verbose=1
 )
 
-print("\n================================")
+
 print("Test Loss     :", test_loss)
 print("Test Accuracy :", test_accuracy)
-print("================================")
+
 
 import os
 
