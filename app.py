@@ -47,9 +47,9 @@ def comt_with_prediction(comments, prediction):
 def percentage_of_results(comment_pred):
     total = len(comment_pred)
     
-    n = (f"negative: {(comment_pred.count('negative') / total) * 100}%")
-    ni = (f"neutral: {(comment_pred.count('neutral') / total) * 100}%")
-    pos = (f"positive: {(comment_pred.count('positive') / total) * 100}%")
+    n = (f"{(comment_pred.count('negative') / total) * 100}%")
+    ni = (f"{(comment_pred.count('neutral') / total) * 100}%")
+    pos = (f"{(comment_pred.count('positive') / total) * 100}%")
 
     return n, ni, pos
 
