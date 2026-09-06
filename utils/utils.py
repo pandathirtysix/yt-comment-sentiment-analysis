@@ -8,7 +8,7 @@ import os
 
 BASE_DIR = os.getcwd()
 
-MODEL_DIR = os.path.join(BASE_DIR, "modeltraining")
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 DATA_DIR = os.path.join(BASE_DIR, "data_pipeline")
 
 
